@@ -1,0 +1,24 @@
+{
+  "persons": [
+    {
+      "id": 1,
+      "firstName": "Анастасия",
+      "lastName": "Mиронова"
+    },
+    {
+      "id": 2,
+      "firstName": "Ренат",
+      "lastName": "Мухамадеев"
+    },
+    {
+      "id": 3,
+      "firstName": "София",
+      "lastName": "Белова"
+    },
+    {
+      "id": 4,
+      "firstName": "Никита",
+      "lastName": "Иванов"
+    }
+  ]
+}

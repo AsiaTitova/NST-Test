@@ -1,10 +1,12 @@
 import React from 'react';
-import Main from './views/Main';
+import MainPage from './views/MainPage';
+
+import './index.scss';
 
 const App = () => {
   return (
     <React.Fragment>
-      <Main />
+      <MainPage />
     </React.Fragment>
   );
 };

@@ -1,0 +1,96 @@
+@import '../../assets/sass/colors.scss';
+@import '../../assets/sass/mixins.scss';
+
+.users-table {
+  width: 100%;
+
+  &__head,
+  &__row {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid $border-default;
+  }
+
+  &__row {
+    cursor: pointer;
+
+    &:hover {
+      background: $primary-opacity;
+
+      svg path {
+        fill: $primary-default;
+      }
+    }
+  }
+
+  &__th,
+  &__cell {
+    width: 100%;
+
+    &:last-child {
+      width: 100px;
+      min-width: 100px;
+      display: flex;
+      align-items: center;
+      justify-self: flex-end;
+    }
+  }
+
+  &__th {
+    @include text(14px, 20px, 700);
+    color: $primary-hovered;
+
+    &_name {
+      padding-left: 40px;
+    }
+  }
+
+  &__cell {
+    &_name {
+      display: flex;
+      align-items: center;
+      svg {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+
+        path {
+          fill: $primary-opacity;
+        }
+      }
+    }
+  }
+
+  &__button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+
+    &__edit {
+      margin-right: 16px;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+
+      path {
+        fill: $primary-opacity;
+      }
+    }
+
+    &:hover {
+      svg {
+        path {
+          fill: $primary-hovered;
+        }
+      }
+    }
+  }
+}
