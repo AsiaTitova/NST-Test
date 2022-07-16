@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000/api/v1/';
+const BASE_URL = 'http://localhost:4000/';
 
 export const getUsers = async () => {
   return axios.get(`${BASE_URL}persons`)
@@ -11,7 +11,7 @@ export const getUsers = async () => {
 };
 
 export const getCurrentUser = async (id) => {
-  return axios.get(`${BASE_URL}persons?id=${id}`)
+  return axios.get(`${BASE_URL}persons/${id}`)
       .then((resp) => {
         return resp;
       })
@@ -27,8 +27,8 @@ export const createUser = async (body) => {
       .catch((error) => console.log(error));
 };
 
-export const updateUser = async (id) => {
-  return axios.put(`${BASE_URL}persons/${id}`)
+export const updateUser = async (body) => {
+  return axios.put(`${BASE_URL}persons/${body.id}`, body)
       .then((resp) => {
         return resp;
       })

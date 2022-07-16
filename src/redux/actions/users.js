@@ -52,7 +52,7 @@ export const getUserAction = (id) => async (dispatch) => {
   try {
     dispatch(loadingUsersAction());
     const resp = await getCurrentUser(id);
-    dispatch(getUserSuccess(resp.data[0], ''));
+    dispatch(getUserSuccess(resp.data, ''));
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -85,12 +85,10 @@ const updateUserSuccess = (user, error) => ({
   error,
 });
 
-export const updateUserAction = (id) => async (dispatch) => {
+export const updateUserAction = (body) => async (dispatch) => {
   try {
-    const resp = await updateUser(id);
+    const resp = await updateUser(body);
     dispatch(updateUserSuccess(resp.data, ''));
-    dispatch(getUserAction(id));
-    dispatch(getUsersAction());
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -98,18 +96,19 @@ export const updateUserAction = (id) => async (dispatch) => {
 
 // удаление пользователя
 
-const deleteUserSuccess = (user, error) => ({
+const deleteUserSuccess = (id, error) => ({
   type: USER_DELETE,
-  user,
+  user: {
+    id: id,
+  },
   loading: false,
   error,
 });
 
 export const deleteUserAction = (id) => async (dispatch) => {
   try {
-    const resp = await deleteUser(id);
-    dispatch(deleteUserSuccess(resp.data, ''));
-    dispatch(getUsersAction());
+    await deleteUser(id);
+    dispatch(deleteUserSuccess(id, ''));
   } catch (error) {
     dispatch(errorUsersAction(error));
   };

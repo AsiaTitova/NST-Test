@@ -5,13 +5,33 @@ import * as actions from '../../redux/actions/users';
 import './UserCard.scss';
 import {bindActionCreators} from 'redux';
 
-const UserCard = ({user, users, modalMode, changeModalMode, setShowModal, createUserAction}) => {
+const UserCard = ({
+  user,
+  modalMode,
+  changeModalMode,
+  setShowModal,
+  createUserAction,
+  updateUserAction,
+  deleteUserAction,
+}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   const closeModal = () => {
     changeModalMode('show');
     setShowModal(false);
+  };
+
+  const editHandler = () => {
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    changeModalMode('edit');
+  };
+
+
+  const deleteHandler = () => {
+    deleteUserAction(user.id);
+    closeModal();
   };
 
   const changeFirstName = (evt) => {
@@ -23,6 +43,23 @@ const UserCard = ({user, users, modalMode, changeModalMode, setShowModal, create
   };
 
   const handleAccept = () => {
+    switch (modalMode) {
+      case 'edit': return updateAction();
+      case 'create': return createAction();
+      default: return false;
+    };
+  };
+
+  const updateAction = () => {
+    updateUserAction({
+      ...user,
+      firstName: firstName,
+      lastName: lastName,
+    });
+    changeModalMode('show');
+  };
+
+  const createAction = () => {
     createUserAction({
       firstName: firstName,
       lastName: lastName,
@@ -47,7 +84,7 @@ const UserCard = ({user, users, modalMode, changeModalMode, setShowModal, create
               <button
                 className={'user-card__button'}
                 type={'button'}
-                onClick={() => changeModalMode('edit')}
+                onClick={editHandler}
               >
                 <Edit />
               </button>}
@@ -55,13 +92,14 @@ const UserCard = ({user, users, modalMode, changeModalMode, setShowModal, create
               <button
                 className={'user-card__button'}
                 type={'button'}
+                onClick={deleteHandler}
               >
                 <Delete />
               </button>}
               <button
                 className={'user-card__button'}
                 type={'button'}
-                onClick={() => closeModal()}
+                onClick={closeModal}
               >
                 <Close />
               </button>
@@ -73,7 +111,7 @@ const UserCard = ({user, users, modalMode, changeModalMode, setShowModal, create
             {modalMode !== 'show' &&
             <input
               type={'text'}
-              className={'user-card__input'}
+              className={'user-card__input user-card__input_name'}
               id={'firstName'}
               value={firstName}
               onChange={changeFirstName}

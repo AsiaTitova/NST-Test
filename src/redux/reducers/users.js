@@ -55,14 +55,16 @@ const loadCreateUserSuccess = (draft, resp) => {
 
 const loadUpdateUserSuccess = (draft, resp) => {
   draft.user = resp.user;
+  draft.users = draft.users.map((item) => item.id === resp.user.id ? resp.user : item);
   draft.loading = false;
   return draft;
 };
 
 // удаление пользователя
 
-const loadDeleteUserSuccess = (draft) => {
+const loadDeleteUserSuccess = (draft, resp) => {
   draft.user = null;
+  draft.users = draft.users.filter((item) => item.id !== resp.user.id);
   draft.loading = false;
   return draft;
 };
@@ -70,7 +72,6 @@ const loadDeleteUserSuccess = (draft) => {
 export default (state = initialState, action) => produce(
     state,
     (draft) => {
-      console.log(draft.users, action);
       switch (action.type) {
         case USERS_LOAD: return loading(draft);
         case USERS_ERROR: return errors(draft, action.error);
