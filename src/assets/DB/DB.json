@@ -5,21 +5,6 @@
       "lastName": "Миронова",
       "apiId": "v1",
       "id": 9
-    },
-    {
-      "firstName": "Виктор",
-      "lastName": "Корнеев",
-      "id": 10
-    },
-    {
-      "firstName": "Михаил",
-      "lastName": "Иванов",
-      "id": 11
-    },
-    {
-      "firstName": "Виктория",
-      "lastName": "Вторушина",
-      "id": 14
     }
   ]
 }

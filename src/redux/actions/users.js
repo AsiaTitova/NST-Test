@@ -8,6 +8,7 @@ import {
   USERS_LOAD,
 } from '../constans/constans';
 import {createUser, deleteUser, getCurrentUser, getUsers, updateUser} from '../../api/api';
+import {setNoticeAction} from './notice';
 
 const loadingUsersAction = () => ({
   type: USERS_LOAD,
@@ -71,6 +72,10 @@ export const createUserAction = (params) => async (dispatch) => {
   try {
     const resp = await createUser(params);
     dispatch(createUserSuccess(resp.data, ''));
+    dispatch(setNoticeAction({
+      status: 'success',
+      label: 'Сотрудник успешно создан!',
+    }));
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -89,6 +94,10 @@ export const updateUserAction = (body) => async (dispatch) => {
   try {
     const resp = await updateUser(body);
     dispatch(updateUserSuccess(resp.data, ''));
+    dispatch(setNoticeAction({
+      status: 'success',
+      label: 'Данные сотрудника успешно изменены!',
+    }));
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -109,6 +118,10 @@ export const deleteUserAction = (id) => async (dispatch) => {
   try {
     await deleteUser(id);
     dispatch(deleteUserSuccess(id, ''));
+    dispatch(setNoticeAction({
+      status: 'success',
+      label: 'Сотрудник успешно удален!',
+    }));
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
