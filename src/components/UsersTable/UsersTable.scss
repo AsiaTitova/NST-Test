@@ -13,7 +13,13 @@
   }
 
   &__row {
+    position: relative;
     cursor: pointer;
+    padding: 16px 8px;
+
+    @media (max-width: 568px) {
+      flex-direction: column;
+    }
 
     &:hover {
       background: $primary-opacity;
@@ -24,16 +30,27 @@
     }
   }
 
+  &__head {
+    @media (max-width: 568px) {
+      display: none;
+    }
+  }
+
   &__th,
   &__cell {
     width: 100%;
 
     &:last-child {
-      width: 100px;
-      min-width: 100px;
+      width: 70px;
+      min-width: 70px;
       display: flex;
       align-items: center;
       justify-self: flex-end;
+
+      @media (max-width: 568px) {
+        width: 40px;
+        min-width: 40px;
+      }
     }
   }
 
@@ -48,17 +65,68 @@
 
   &__cell {
     &_name {
+      position: relative;
       display: flex;
       align-items: center;
+
+      @media (max-width: 568px) {
+        padding: 0 45px;
+        flex-wrap: wrap;
+      }
+
       svg {
         width: 24px;
         height: 24px;
         margin-right: 16px;
 
+        @media (max-width: 568px) {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 36px;
+          height: 36px;
+          margin-right: 0;
+        }
+
         path {
           fill: $primary-opacity;
         }
       }
+    }
+
+    &_last-name {
+      @media (max-width: 568px) {
+        padding: 0 45px;
+      }
+    }
+
+    &_control {
+      @media (max-width: 568px) {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+      }
+    }
+  }
+
+  &__label {
+    display: none;
+
+    @media (max-width: 568px) {
+      display: block;
+      margin: 0 0 4px;
+      @include text(14px, 20px, 700);
+      color: $primary-hovered;
+    }
+  }
+
+  &__info {
+      display: block;
+      width: 100%;
+      @include textEllipsis(1);
+
+    @media (max-width: 568px) {
+      margin: 0 0 16px;
     }
   }
 
@@ -72,6 +140,11 @@
     background: transparent;
     border: none;
 
+    @media (max-width: 568px) {
+      width: 24px;
+      height: 24px;
+    }
+
     &__edit {
       margin-right: 16px;
     }
@@ -79,6 +152,11 @@
     svg {
       width: 24px;
       height: 24px;
+
+      @media (max-width: 568px) {
+        width: 16px;
+        height: 16px;
+      }
 
       path {
         fill: $primary-opacity;

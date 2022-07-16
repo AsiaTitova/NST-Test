@@ -1,0 +1,134 @@
+@import '../../assets/sass/colors.scss';
+@import '../../assets/sass/mixins.scss';
+
+.user-card {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  &__modal {
+    width: 345px;
+    background: $white-default;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 32px;
+    border-radius: 4px 4px 0 0;
+    background: $primary-default;
+  }
+
+  &__title {
+    @include text(18px, 24px, 500);
+    color: $white-default;
+  }
+
+  &__control-panel {
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+
+      path {
+        fill: $white-default;
+        transition: all 0.3s ease;
+      }
+    }
+
+    &:hover {
+      svg {
+        path {
+          fill: $primary-hovered;
+        }
+      }
+    }
+  }
+
+  &__wrap {
+    padding: 24px 32px;
+  }
+
+  &__label {
+    @include text(14px, 20px, 500);
+    color: $primary-hovered;
+    margin: 0 0 4px;
+  }
+
+  &__content {
+    @include text(14px, 20px, 400);
+    @include textEllipsis(2);
+    color: $text-default;
+    margin: 0 0 24px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 16px;
+  }
+
+  &__accept {
+    @include text(14px, 20px, 700);
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    background: $primary-default;
+    color: $white-default;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $primary-hovered;
+    }
+  }
+
+  &__cancel {
+    @include text(14px, 20px, 700);
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    background: transparent;
+    color: $primary-default;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $primary-hovered;
+    }
+  }
+}

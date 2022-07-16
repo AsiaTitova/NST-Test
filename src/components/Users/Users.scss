@@ -16,11 +16,19 @@
     padding: 16px 32px;
     border-radius: 4px 4px 0 0;
     background: $primary-default;
+
+    @media (max-width: 568px) {
+      padding: 16px;
+    }
   }
 
   &__title {
     @include text(18px, 24px, 700);
     color: $white-default;
+
+    @media (max-width: 568px) {
+      @include text(16px, 22px, 700);
+    }
   }
 
   &__button {
@@ -33,9 +41,19 @@
     background: transparent;
     border: none;
 
+    @media (max-width: 568px) {
+      width: 20px;
+      height: 20px;
+    }
+
     svg {
       width: 24px;
       height: 24px;
+
+      @media (max-width: 568px) {
+        width: 16px;
+        height: 16px;
+      }
 
       path {
         fill: $white-default;
