@@ -11,6 +11,7 @@ const UsersTable = ({
   getUserAction,
   changeModalMode,
   setShowModal,
+  deleteUserAction,
 }) => {
   useEffect(() => {
     return () => getUsersAction();
@@ -20,6 +21,17 @@ const UsersTable = ({
     getUserAction(id);
     setShowModal(true);
     changeModalMode('show');
+  };
+
+  const editHandler = (id) => {
+    getUserAction(id);
+    setShowModal(true);
+    changeModalMode('edit');
+  };
+
+  const deleteHandler = (evt, id) => {
+    evt.stopPropagation();
+    deleteUserAction(id);
   };
 
   return (
@@ -46,10 +58,18 @@ const UsersTable = ({
               <span className={'users-table__info'}>{user.lastName}</span>
             </div>
             <div className={'users-table__cell users-table__cell_control'}>
-              <button className={'users-table__button users-table__button_edit'} type={'button'}>
+              <button
+                className={'users-table__button users-table__button_edit'}
+                type={'button'}
+                onClick={() => editHandler(user.id)}
+              >
                 <Edit />
               </button>
-              <button className={'users-table__button'} type={'button'}>
+              <button
+                className={'users-table__button'}
+                type={'button'}
+                onClick={(evt) => deleteHandler(evt, user.id)}
+              >
                 <Delete />
               </button>
             </div>
