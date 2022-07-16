@@ -4,9 +4,11 @@ import {Delete, Edit, User} from '../../assets/img/icons/Sprite';
 import * as actions from '../../redux/actions/users';
 import './UsersTable.scss';
 import {bindActionCreators} from 'redux';
+import Loader from '../Loader/Loader';
 
 const UsersTable = ({
   users,
+  loading,
   getUsersAction,
   getUserAction,
   changeModalMode,
@@ -42,7 +44,8 @@ const UsersTable = ({
           <div className={'users-table__th'}>Фамилия</div>
           <div className={'users-table__th'}></div>
         </div>
-        {users && users.length && users.map((user, index) => (
+        {loading && <Loader />}
+        {!loading && users && users.length ? users.map((user, index) => (
           <div
             className={'users-table__row'}
             key={index}
@@ -73,7 +76,12 @@ const UsersTable = ({
                 <Delete />
               </button>
             </div>
-          </div>))}
+          </div>)) :
+          !loading ?
+          <div className={'users-table__empty'}>
+            <p className={'users-table__content'}>Пусто :(</p>
+          </div> :
+            '' }
       </div>
     </React.Fragment>
   );
@@ -81,6 +89,7 @@ const UsersTable = ({
 
 export default connect((state) => ({
   users: state.users.users,
+  loading: state.users.loading,
 }),
 (dispatch) => bindActionCreators(actions, dispatch),
 )(UsersTable);
