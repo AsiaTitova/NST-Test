@@ -13,13 +13,18 @@ const Users = () => {
     setModalMode(val);
   };
 
+  const openCreateModal = () => {
+    changeModalMode('create');
+    setShowModal(true);
+  };
+
   return (
     <React.Fragment>
       <div className={'users'}>
         <div className={'users__head'}>
           <h1 className={'users__title'}>Список сотрудников</h1>
-          <button className={'users__button'} type={'button'}>
-            <Plus onClick={() => changeModalMode('show')} />
+          <button className={'users__button'} type={'button'} onClick={() => openCreateModal()}>
+            <Plus />
           </button>
         </div>
         <UsersTable changeModalMode={changeModalMode} setShowModal={setShowModal} />

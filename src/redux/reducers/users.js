@@ -46,8 +46,8 @@ const loadUserSuccess = (draft, resp) => {
 // создание пользователя
 
 const loadCreateUserSuccess = (draft, resp) => {
-  draft.user = resp.user;
   draft.loading = false;
+  draft.users = draft.users.concat([resp.user]);
   return draft;
 };
 
@@ -70,6 +70,7 @@ const loadDeleteUserSuccess = (draft) => {
 export default (state = initialState, action) => produce(
     state,
     (draft) => {
+      console.log(draft.users, action);
       switch (action.type) {
         case USERS_LOAD: return loading(draft);
         case USERS_ERROR: return errors(draft, action.error);

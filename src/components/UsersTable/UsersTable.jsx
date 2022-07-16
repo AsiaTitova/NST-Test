@@ -13,7 +13,7 @@ const UsersTable = ({
   setShowModal,
 }) => {
   useEffect(() => {
-    getUsersAction();
+    return () => getUsersAction();
   }, []);
 
   const openUserInfo = (id) => {

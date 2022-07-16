@@ -49,7 +49,7 @@
     justify-content: center;
     background: transparent;
     border: none;
-    transition: all 0.3s ease;
+    transition:  all 0.5s ease;
 
     svg {
       width: 16px;
@@ -57,7 +57,7 @@
 
       path {
         fill: $white-default;
-        transition: all 0.3s ease;
+        transition:  all 0.5s ease;
       }
     }
 
@@ -106,7 +106,7 @@
     border: none;
     border-radius: 4px;
     outline: none;
-    transition: all 0.3s ease;
+    transition:  all 0.5s ease;
 
     &:hover {
       background: $primary-hovered;
@@ -125,7 +125,7 @@
     border: none;
     border-radius: 4px;
     outline: none;
-    transition: all 0.3s ease;
+    transition:  all 0.5s ease;
 
     &:hover {
       color: $primary-hovered;

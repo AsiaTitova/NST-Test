@@ -1,4 +1,12 @@
-import {USER_GET, USERS_ERROR, USERS_GET, USERS_LOAD} from '../constans/constans';
+import {
+  USER_CREATE,
+  USER_DELETE,
+  USER_GET,
+  USER_UPDATE,
+  USERS_ERROR,
+  USERS_GET,
+  USERS_LOAD,
+} from '../constans/constans';
 import {createUser, deleteUser, getCurrentUser, getUsers, updateUser} from '../../api/api';
 
 const loadingUsersAction = () => ({
@@ -53,17 +61,16 @@ export const getUserAction = (id) => async (dispatch) => {
 // создание пользователя
 
 const createUserSuccess = (user, error) => ({
-  type: USER_GET,
+  type: USER_CREATE,
   user,
   loading: false,
   error,
 });
 
-export const createUserAction = () => async (dispatch) => {
+export const createUserAction = (params) => async (dispatch) => {
   try {
-    const resp = await createUser();
+    const resp = await createUser(params);
     dispatch(createUserSuccess(resp.data, ''));
-    dispatch(getUsersAction());
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -72,7 +79,7 @@ export const createUserAction = () => async (dispatch) => {
 // редактирование пользователя
 
 const updateUserSuccess = (user, error) => ({
-  type: USER_GET,
+  type: USER_UPDATE,
   user,
   loading: false,
   error,
@@ -92,7 +99,7 @@ export const updateUserAction = (id) => async (dispatch) => {
 // удаление пользователя
 
 const deleteUserSuccess = (user, error) => ({
-  type: USER_GET,
+  type: USER_DELETE,
   user,
   loading: false,
   error,
