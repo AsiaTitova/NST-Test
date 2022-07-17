@@ -5,7 +5,7 @@ import {
 } from '../constans/constans';
 
 const initialState = {
-  status: 'success',
+  status: '',
   label: '',
 };
 
@@ -17,7 +17,7 @@ export const setNoticeSuccess = (draft, notice) => {
 
 
 const resetNoticeSuccess = (draft) => {
-  draft.status = 'success';
+  draft.status = '';
   draft.label = '';
   return draft;
 };

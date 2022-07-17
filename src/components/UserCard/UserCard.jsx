@@ -56,11 +56,19 @@ const UserCard = ({
     };
   };
 
+  const handleCancel = () => {
+    switch (modalMode) {
+      case 'edit': return changeModalMode('show');
+      case 'create': return closeModal();
+      default: return false;
+    };
+  };
+
   const updateAction = () => {
     const body = {
       ...user,
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
     };
     if (!validation(body)) return false;
     updateUserAction(body);
@@ -69,8 +77,8 @@ const UserCard = ({
 
   const createAction = () => {
     const body = {
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
     };
     if (!validation(body)) return false;
     createUserAction(body);
@@ -191,7 +199,7 @@ const UserCard = ({
             <button
               className={'user-card__cancel'}
               type={'button'}
-              onClick={() => changeModalMode('show')}
+              onClick={handleCancel}
             >
               Отменить
             </button>

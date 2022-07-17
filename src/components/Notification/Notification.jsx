@@ -24,7 +24,7 @@ const Notification = ({notification, resetNoticeAction}) => {
     switch (notification?.status) {
       case 'error': return 'error';
       case 'success': return 'success';
-      default: return 'success';
+      default: return '';
     };
   };
 
