@@ -10,6 +10,29 @@ import {
 import {createUser, deleteUser, getCurrentUser, getUsers, updateUser} from '../../api/api';
 import {setNoticeAction} from './notice';
 
+const errorsNotifications = (error, dispatch) => {
+  switch (error) {
+    case 400: {
+      return dispatch(setNoticeAction({
+        status: 'error',
+        label: 'Не верный запрос!',
+      }));
+    }
+    case 404: {
+      return dispatch(setNoticeAction({
+        status: 'error',
+        label: 'Сотрудник не найден!',
+      }));
+    }
+    default: {
+      return dispatch(setNoticeAction({
+        status: 'error',
+        label: 'Ошибка сервера!',
+      }));
+    }
+  }
+};
+
 const loadingUsersAction = () => ({
   type: USERS_LOAD,
   loading: true,
@@ -34,7 +57,11 @@ export const getUsersAction = () => async (dispatch) => {
   try {
     dispatch(loadingUsersAction());
     const resp = await getUsers();
-    dispatch(getUsersSuccess(resp.data, ''));
+    if (resp.status === 200 || resp.status === 201 || resp.status === 304) {
+      dispatch(getUsersSuccess(resp.data, ''));
+    } else {
+      errorsNotifications(resp.status, dispatch);
+    }
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -51,9 +78,12 @@ const getUserSuccess = (user, error) => ({
 
 export const getUserAction = (id) => async (dispatch) => {
   try {
-    dispatch(loadingUsersAction());
     const resp = await getCurrentUser(id);
-    dispatch(getUserSuccess(resp.data, ''));
+    if (resp.status === 200 || resp.status === 201 || resp.status === 304) {
+      dispatch(getUserSuccess(resp.data, ''));
+    } else {
+      errorsNotifications(resp.status, dispatch);
+    }
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -71,11 +101,15 @@ const createUserSuccess = (user, error) => ({
 export const createUserAction = (params) => async (dispatch) => {
   try {
     const resp = await createUser(params);
-    dispatch(createUserSuccess(resp.data, ''));
-    dispatch(setNoticeAction({
-      status: 'success',
-      label: 'Сотрудник успешно создан!',
-    }));
+    if (resp.status === 200 || resp.status === 201) {
+      dispatch(createUserSuccess(resp.data, ''));
+      dispatch(setNoticeAction({
+        status: 'success',
+        label: 'Сотрудник успешно создан!',
+      }));
+    } else {
+      errorsNotifications(resp.status, dispatch);
+    }
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -93,11 +127,15 @@ const updateUserSuccess = (user, error) => ({
 export const updateUserAction = (body) => async (dispatch) => {
   try {
     const resp = await updateUser(body);
-    dispatch(updateUserSuccess(resp.data, ''));
-    dispatch(setNoticeAction({
-      status: 'success',
-      label: 'Данные сотрудника успешно изменены!',
-    }));
+    if (resp.status === 200 || resp.status === 201) {
+      dispatch(updateUserSuccess(resp.data, ''));
+      dispatch(setNoticeAction({
+        status: 'success',
+        label: 'Данные сотрудника успешно изменены!',
+      }));
+    } else {
+      errorsNotifications(resp.status, dispatch);
+    }
   } catch (error) {
     dispatch(errorUsersAction(error));
   };
@@ -116,12 +154,16 @@ const deleteUserSuccess = (id, error) => ({
 
 export const deleteUserAction = (id) => async (dispatch) => {
   try {
-    await deleteUser(id);
-    dispatch(deleteUserSuccess(id, ''));
-    dispatch(setNoticeAction({
-      status: 'success',
-      label: 'Сотрудник успешно удален!',
-    }));
+    const resp = await deleteUser(id);
+    if (resp.status === 200 || resp.status === 201) {
+      dispatch(deleteUserSuccess(id, ''));
+      dispatch(setNoticeAction({
+        status: 'success',
+        label: 'Сотрудник успешно удален!',
+      }));
+    } else {
+      errorsNotifications(resp.status, dispatch);
+    }
   } catch (error) {
     dispatch(errorUsersAction(error));
   };

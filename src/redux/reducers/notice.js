@@ -9,9 +9,9 @@ const initialState = {
   label: '',
 };
 
-const setNoticeSuccess = (draft, notice) => {
+export const setNoticeSuccess = (draft, notice) => {
   draft.status = notice.status;
-  draft.label = notice.label;
+  draft.label = notice.label || notice.message;
   return draft;
 };
 

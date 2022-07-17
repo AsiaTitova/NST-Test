@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Close, Delete, Edit} from '../../assets/img/icons/Sprite';
 import * as actions from '../../redux/actions/users';
-import './UserCard.scss';
+import * as notice from '../../redux/actions/notice';
 import {bindActionCreators} from 'redux';
+import classNames from 'classnames';
+
+import './UserCard.scss';
 
 const UserCard = ({
   user,
@@ -13,9 +16,12 @@ const UserCard = ({
   createUserAction,
   updateUserAction,
   deleteUserAction,
+  setNoticeAction,
 }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
 
   const closeModal = () => {
     changeModalMode('show');
@@ -51,20 +57,63 @@ const UserCard = ({
   };
 
   const updateAction = () => {
-    updateUserAction({
+    const body = {
       ...user,
       firstName: firstName,
       lastName: lastName,
-    });
+    };
+    if (!validation(body)) return false;
+    updateUserAction(body);
     changeModalMode('show');
   };
 
   const createAction = () => {
-    createUserAction({
+    const body = {
       firstName: firstName,
       lastName: lastName,
-    });
+    };
+    if (!validation(body)) return false;
+    createUserAction(body);
     closeModal();
+  };
+
+  const validation = (val) => {
+    if (!val.firstName.length) {
+      setNoticeAction({
+        status: 'error',
+        label: 'Поле имя должно быть заполнено!',
+      });
+      setFirstNameError(true);
+      return false;
+    }
+    if (!val.firstName.length > 50) {
+      setNoticeAction({
+        status: 'error',
+        label: 'Поле имя должно содержать не более 50 символов!',
+      });
+      setFirstNameError(true);
+      return false;
+    }
+    if (!val.lastName.length) {
+      setNoticeAction({
+        status: 'error',
+        label: 'Поле фамилия должно быть заполнено!',
+      });
+      setLastNameError(true);
+      return false;
+    }
+
+    if (!val.lastName.length > 50) {
+      setNoticeAction({
+        status: 'error',
+        label: 'Поле фамилия должно содержать не более 50 символов!',
+      });
+      setLastNameError(true);
+      return false;
+    }
+    setFirstNameError(false);
+    setLastNameError(false);
+    return true;
   };
 
   return (
@@ -111,9 +160,14 @@ const UserCard = ({
             {modalMode !== 'show' &&
             <input
               type={'text'}
-              className={'user-card__input user-card__input_name'}
+              className={ classNames(
+                  'user-card__input user-card__input_name',
+                  {'user-card__input_error': firstNameError}
+              )}
               id={'firstName'}
+              maxLength={50}
               value={firstName}
+              placeholder={'Имя сотрудника'}
               onChange={changeFirstName}
             />}
             <h3 className={'user-card__label'}>Фамилия</h3>
@@ -121,9 +175,14 @@ const UserCard = ({
             {modalMode !== 'show' &&
             <input
               type={'text'}
-              className={'user-card__input'}
+              className={classNames(
+                  'user-card__input',
+                  {'user-card__input_error': lastNameError}
+              )}
               id={'lastName'}
+              maxLength={50}
               value={lastName}
+              placeholder={'Фамилия сотрудника'}
               onChange={changeLastName}
             />}
           </div>
@@ -154,5 +213,5 @@ export default connect((state) => ({
   user: state.users.user,
   users: state.users.users,
 }),
-(dispatch) => bindActionCreators(actions, dispatch),
+(dispatch) => bindActionCreators({...actions, ...notice}, dispatch),
 )(UserCard);

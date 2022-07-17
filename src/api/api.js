@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:4000/';
 
-export const getUsers = async () => {
+export const getUsers = async (dispatch) => {
   return axios.get(`${BASE_URL}persons`)
       .then((resp) => {
         return resp;
@@ -15,7 +15,9 @@ export const getCurrentUser = async (id) => {
       .then((resp) => {
         return resp;
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        return error.response;
+      });
 };
 
 

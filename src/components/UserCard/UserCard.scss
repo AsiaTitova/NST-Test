@@ -17,6 +17,10 @@
     background: $white-default;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+
+    @media (max-width: 568px) {
+      width: 280px;
+    }
   }
 
   &__head {
@@ -139,7 +143,9 @@
     background: $white-default;
     border: 1px solid $primary-default;
     border-radius: 4px;
+    color: $text-default;
     transition: all 0.5s ease;
+    outline: none;
 
     &:hover {
       border: 1px solid $primary-hovered;
@@ -147,6 +153,11 @@
 
     &_name {
       margin: 0 0 24px;
+    }
+
+    &_error {
+      border: 1px solid $error;
+      color: $error;
     }
   }
 }
